@@ -7,4 +7,8 @@ public class RegistroNotFoundException extends RuntimeException {
     public RegistroNotFoundException(Long id) {
         super("Registro não encontrado com id: "+id);
     }
+
+    public RegistroNotFoundException(String value) {
+        super("Registro "+ value + "não encontrado ");
+    }
 }
