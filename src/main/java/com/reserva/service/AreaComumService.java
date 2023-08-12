@@ -1,16 +1,13 @@
 package com.reserva.service;
 
 import com.reserva.dto.AreaComumDto;
-import com.reserva.dto.ImovelDto;
 import com.reserva.exception.RegistroNotFoundException;
+import com.reserva.exception.RegistroUniqueException;
 import com.reserva.model.AreaComum;
-import com.reserva.model.Imovel;
 import com.reserva.repository.AreaComumRepository;
-import com.reserva.repository.ImovelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,7 +20,20 @@ public class AreaComumService {
         return areaComumRepository.findAll();
     }
 
+    public AreaComum getById(Long id) {
+        return areaComumRepository.findById(id).orElseThrow(() -> new RegistroNotFoundException(id));
+    }
+
+    public AreaComum getByCodAreaComum(String codAreaComum) {
+        return areaComumRepository.getFirstByCodAreaComum(codAreaComum).orElseThrow(() ->
+                new RegistroNotFoundException(codAreaComum));
+    }
+
     public AreaComum salvar(AreaComumDto areaComumDto) {
+        if (getByCodAreaComum(areaComumDto.getCodAreaComum()) != null) {
+            throw new RegistroUniqueException(areaComumDto.getCodAreaComum());
+        }
+
         AreaComum areaComum = new AreaComum();
         areaComum.setId(null);
         areaComum.setCodAreaComum(areaComumDto.getCodAreaComum());
@@ -32,9 +42,5 @@ public class AreaComumService {
         areaComum.setQuantidadeReservaPermitidaPorSemana(areaComum.getQuantidadeReservaPermitidaPorSemana());
         areaComum.setQuantidadeReservaPermitidaPorMes(areaComumDto.getQuantidadeReservaPermitidaPorMes());
         return areaComumRepository.save(areaComum);
-    }
-
-    public AreaComum getById(Long id) {
-        return areaComumRepository.findById(id).orElseThrow(() -> new RegistroNotFoundException(id));
     }
 }
