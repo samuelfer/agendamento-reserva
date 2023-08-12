@@ -16,7 +16,7 @@ public class AreaComumController {
     private AreaComumService areaComumService;
 
     @GetMapping
-    public ResponseEntity getImoveis() {
+    public ResponseEntity getAreas() {
         return ResponseEntity.ok(areaComumService.listAll());
     }
 
