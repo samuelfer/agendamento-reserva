@@ -19,22 +19,17 @@ public class AreaComum {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "area_comum_sequence")
     private Long id;
 
-    @NotNull
     private String codAreaComum;
 
-    @NotNull
     private String descricaoAreaComum;
 
     @Column
-    @NotNull
     private Long horarioEmMinutosMinimoAntecedencia;
 
     @Column
-    @NotNull
     private int quantidadeReservaPermitidaPorSemana;
 
     @Column
-    @NotNull
     private int quantidadeReservaPermitidaPorMes;
 
 }
