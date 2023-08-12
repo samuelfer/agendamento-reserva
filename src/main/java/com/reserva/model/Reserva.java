@@ -19,7 +19,7 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reserva_sequence")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Imovel imovel;
 
     @Column
