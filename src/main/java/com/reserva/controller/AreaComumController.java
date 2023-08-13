@@ -20,6 +20,11 @@ public class AreaComumController {
         return ResponseEntity.ok(areaComumService.listAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getAreaById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(areaComumService.getById(id));
+    }
+
     @PostMapping
     public ResponseEntity salvar(@RequestBody @Valid AreaComumDto areaComumDto) {
         return ResponseEntity.ok(areaComumService.salvar(areaComumDto));
