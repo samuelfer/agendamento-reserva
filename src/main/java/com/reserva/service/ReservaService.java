@@ -2,17 +2,14 @@ package com.reserva.service;
 
 import com.reserva.domain.validacao_reserva.IValidadorAgendamentoReserva;
 import com.reserva.dto.DadosAgendamentoReservaDto;
-import com.reserva.exception.ValidacaoException;
 import com.reserva.model.AreaComum;
 import com.reserva.model.Imovel;
 import com.reserva.model.Reserva;
-import com.reserva.repository.ImovelRepository;
 import com.reserva.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservaService {
@@ -42,5 +39,14 @@ public class ReservaService {
         reserva.setAreaComum(areaComum.getId());
         reserva.setDataHoraReserva(dados.getDataHoraReserva());
         reservaRepository.save(reserva);
+    }
+
+    public List<Reserva> listAllReservasPorImovel(Long imovelId) {
+       return reservaRepository.findByImovelId(imovelId);
+    }
+
+    public List<Reserva> listAllReservasPorArea(Long areaId) {
+        areaComumService.getById(areaId);
+        return reservaRepository.findByAreaComum(areaId);
     }
 }

@@ -22,6 +22,16 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.listAll());
     }
 
+    @GetMapping("/imoveis/{imovelId}")
+    public ResponseEntity getReservasPorImovel(@PathVariable("numero") Long imovelId) {
+        return ResponseEntity.ok(reservaService.listAllReservasPorImovel(imovelId));
+    }
+
+    @GetMapping("/areas/{areaId}")
+    public ResponseEntity getReservasPorArea(@PathVariable("areaId") Long areaId) {
+        return ResponseEntity.ok(reservaService.listAllReservasPorArea(areaId));
+    }
+
     @PostMapping
     public ResponseEntity agendarReserva(@RequestBody @Valid DadosAgendamentoReservaDto dados) {
         try {
