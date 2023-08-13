@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class AreaComumDto {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String codAreaComum;
 
     @NotNull

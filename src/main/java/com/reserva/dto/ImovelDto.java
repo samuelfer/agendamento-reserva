@@ -3,6 +3,7 @@ package com.reserva.dto;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +16,8 @@ public class ImovelDto {
 
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "O campo número não pode ser nulo")
+    @NotEmpty(message = "O campo número não pode ser vazio")
+    @Column(unique = true)
     private String numero;
 }

@@ -1,8 +1,7 @@
 package com.reserva.service;
 
 import com.reserva.dto.AreaComumDto;
-import com.reserva.exception.RegistroNotFoundException;
-import com.reserva.exception.RegistroUniqueException;
+import com.reserva.exception.ObjectNotFoundException;
 import com.reserva.model.AreaComum;
 import com.reserva.repository.AreaComumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,17 @@ public class AreaComumService {
     }
 
     public AreaComum getById(Long id) {
-        return areaComumRepository.findById(id).orElseThrow(() -> new RegistroNotFoundException(id));
+        return areaComumRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
     }
 
     public AreaComum getByCodAreaComum(String codAreaComum) {
         return areaComumRepository.getFirstByCodAreaComum(codAreaComum).orElseThrow(() ->
-                new RegistroNotFoundException(codAreaComum));
+                new ObjectNotFoundException(codAreaComum));
     }
 
     public AreaComum salvar(AreaComumDto areaComumDto) {
         if (getByCodAreaComum(areaComumDto.getCodAreaComum()) != null) {
-            throw new RegistroUniqueException(areaComumDto.getCodAreaComum());
+            throw new ObjectNotFoundException(areaComumDto.getCodAreaComum());
         }
 
         AreaComum areaComum = new AreaComum();
