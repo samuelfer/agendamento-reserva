@@ -9,6 +9,6 @@ public class ObjectNotFoundException extends RuntimeException {
     }
 
     public ObjectNotFoundException(String value) {
-        super("Registro "+ value + "não encontrado ");
+        super("Registro "+ value + " não encontrado ");
     }
 }
