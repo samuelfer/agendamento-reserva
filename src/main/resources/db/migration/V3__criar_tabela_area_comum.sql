@@ -10,5 +10,5 @@ create table area_comum(
     primary key(id)
 
 );
-
+ALTER TABLE area_comum ADD CONSTRAINT area_comum_cod_area_comum_unique UNIQUE (cod_area_comum);
 CREATE SEQUENCE area_comum_sequence START 1;

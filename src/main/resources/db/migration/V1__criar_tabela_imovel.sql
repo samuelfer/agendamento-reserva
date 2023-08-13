@@ -7,5 +7,5 @@ create table imovel(
     primary key(id)
 
 );
-
+ALTER TABLE imovel ADD CONSTRAINT imovel_numero_unique UNIQUE (numero);
 CREATE SEQUENCE imovel_sequence START 1;
