@@ -11,8 +11,8 @@
 	<groupId>com.reserva</groupId>
 	<artifactId>reserva</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reserva</name>
-	<description>Projeto para reservas de sala</description>
+	<name>agendamento_reserva</name>
+	<description>Projeto para agendamento de reservas de sala</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
