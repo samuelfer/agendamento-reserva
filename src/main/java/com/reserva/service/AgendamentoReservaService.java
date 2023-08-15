@@ -1,17 +1,16 @@
 package com.reserva.service;
 
 import com.reserva.domain.validacao_reserva.IValidadorAgendamentoReserva;
-import com.reserva.dto.DadosAgendamentoReservaDto;
+import com.reserva.dto.AgendamentoReservaDto;
 import com.reserva.exception.RegrasAgendamentoValidadorException;
-import com.reserva.model.AreaComum;
 import com.reserva.model.Imovel;
 import com.reserva.model.AgendaReserva;
 import com.reserva.repository.AgendamentoReservaRepository;
 import com.reserva.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -31,21 +30,17 @@ public class AgendamentoReservaService {
         return reservaRepository.findAll();
     }
 
-    public void agendarReserva(DadosAgendamentoReservaDto dados) {
-        Imovel imovel = imovelService.validaStatusInadimplencia(dados.getImovelId());
+    @Transactional
+    public AgendamentoReservaDto agendarReserva(AgendamentoReservaDto dadosAgendamento) {
+        Imovel imovel = imovelService.validaStatusInadimplencia(dadosAgendamento.getImovelId());
 
-        existsAgendamentoParaAreaNaDataHoraSolicitada(dados);
+        existsAgendamentoParaAreaNaDataHoraSolicitada(dadosAgendamento);
+        List<AgendaReserva> reservasImovel = reservaRepository.findByImovelId(dadosAgendamento.getImovelId());
 
-        AreaComum areaComum = areaComumService.getById(dados.getAreaComum());
-
-        List<AgendaReserva> reservasImovel = reservaRepository.findByImovelId(dados.getImovelId());
-
-        validadores.forEach(v -> v.validar(dados, reservasImovel));
-        AgendaReserva reserva = new AgendaReserva();
-        reserva.setImovel(imovel);
-        reserva.setAreaComum(areaComum.getId());
-        reserva.setDataHoraReserva(dados.getDataHoraReserva());
-        reservaRepository.save(reserva);
+        //Antes de chamar as regras serah necessario verificar se o condominio as utiliza
+        validadores.forEach(v -> v.validar(dadosAgendamento, reservasImovel));
+        AgendaReserva agendamentoSalvo = reservaRepository.save(setDadosAgendamentoReserva(dadosAgendamento, imovel));
+        return dadosAgendamento.agendamentoReservaResponseDto(agendamentoSalvo);
     }
 
     public List<AgendaReserva> listAllReservasPorImovel(Long imovelId) {
@@ -57,13 +52,20 @@ public class AgendamentoReservaService {
         return reservaRepository.findByAreaComum(areaId);
     }
 
-    private void existsAgendamentoParaAreaNaDataHoraSolicitada(DadosAgendamentoReservaDto dados) {
+    private void existsAgendamentoParaAreaNaDataHoraSolicitada(AgendamentoReservaDto dados) {
         Date dateAgendamento = DateUtil.localDateTimeToDate(dados.getDataHoraReserva());
         Long jaExistsAgendamento = reservaRepository
                .existsByAreaComumAndAndDataHoraReserva(dados.getAreaComum(), dateAgendamento);
        if (jaExistsAgendamento > 0) {
            throw new RegrasAgendamentoValidadorException("Já existe um agendamento de reserva nesse horário e data para a área solicitada");
        }
+    }
 
+    private AgendaReserva setDadosAgendamentoReserva(AgendamentoReservaDto dados, Imovel imovel) {
+        AgendaReserva agendamentoReserva = new AgendaReserva();
+        agendamentoReserva.setImovel(imovel);
+        agendamentoReserva.setAreaComum(areaComumService.getById(dados.getAreaComum()).getId());
+        agendamentoReserva.setDataHoraReserva(dados.getDataHoraReserva());
+        return agendamentoReserva;
     }
 }
