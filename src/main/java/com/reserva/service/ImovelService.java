@@ -2,6 +2,7 @@ package com.reserva.service;
 
 import com.reserva.dto.ImovelDto;
 import com.reserva.exception.ObjectNotFoundException;
+import com.reserva.exception.RegrasAgendamentoValidadorException;
 import com.reserva.model.Imovel;
 import com.reserva.repository.ImovelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,18 @@ public class ImovelService {
     }
 
     public Imovel salvar(ImovelDto imovelDto) {
-//        if (getByNumero(imovelDto.getNumero()) != null) {
-//            throw new RegistroUniqueException(imovelDto.getNumero());
-//        }
         Imovel novoImovel = new Imovel();
         novoImovel.setId(null);
         novoImovel.setNumero(imovelDto.getNumero());
         return imovelRepository.save(novoImovel);
+    }
+
+    public Imovel validaStatusInadimplencia(Long imovelId) {
+        Imovel imovel = getById(imovelId);
+
+        if (imovel.getInadimplente()) {
+          throw new RegrasAgendamentoValidadorException("Não será possível agendar essa reserva. Contate o Síndico");
+        }
+        return imovel;
     }
 }
