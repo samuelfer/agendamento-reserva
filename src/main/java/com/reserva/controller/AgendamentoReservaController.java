@@ -1,6 +1,6 @@
 package com.reserva.controller;
 
-import com.reserva.dto.DadosAgendamentoReservaDto;
+import com.reserva.dto.AgendamentoReservaDto;
 import com.reserva.service.AgendamentoReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Arrays;
 
-@RequestMapping("reservas")
+@RequestMapping("agendamento-reservas")
 @RestController
 public class AgendamentoReservaController {
 
@@ -33,10 +33,9 @@ public class AgendamentoReservaController {
     }
 
     @PostMapping
-    public ResponseEntity agendarReserva(@RequestBody @Valid DadosAgendamentoReservaDto dados) {
+    public ResponseEntity agendarReserva(@Valid @RequestBody AgendamentoReservaDto dados) {
         try {
-            reservaService.agendarReserva(dados);
-            return ResponseEntity.ok(reservaService.listAll());
+            return ResponseEntity.ok(reservaService.agendarReserva(dados));
         } catch (Exception e) {
             return new ResponseEntity<>(Arrays.asList(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
