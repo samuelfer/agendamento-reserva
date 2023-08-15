@@ -49,7 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<Object> handleDataIntegrityViolationException(
             DataIntegrityViolationException e, WebRequest request) {
-        final String mensagemErro = e.getMostSpecificCause().getMessage();
+        final String mensagemErro = "Registro já cadastrado";
         log.error(mensagemErro, e);
         return buildErrorResponse(e, mensagemErro, HttpStatus.CONFLICT, request);
     }
