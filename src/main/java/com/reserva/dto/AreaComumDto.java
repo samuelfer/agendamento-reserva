@@ -1,5 +1,6 @@
 package com.reserva.dto;
 
+import com.reserva.model.AreaComum;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +32,15 @@ public class AreaComumDto {
 
     @NotNull
     private int quantidadeReservaPermitidaPorMes;
+
+    public AreaComum salvar(AreaComumDto areaComumDto) {
+        AreaComum areaComum = new AreaComum();
+        areaComum.setId(null);
+        areaComum.setCodAreaComum(areaComumDto.getCodAreaComum());
+        areaComum.setDescricaoAreaComum(areaComumDto.getDescricaoAreaComum());
+        areaComum.setHorarioEmMinutosMinimoAntecedencia(areaComumDto.getHorarioEmMinutosMinimoAntecedencia());
+        areaComum.setQuantidadeReservaPermitidaPorSemana(areaComum.getQuantidadeReservaPermitidaPorSemana());
+        areaComum.setQuantidadeReservaPermitidaPorMes(areaComumDto.getQuantidadeReservaPermitidaPorMes());
+        return areaComum;
+    }
 }

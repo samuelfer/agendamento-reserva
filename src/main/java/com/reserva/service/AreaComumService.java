@@ -29,17 +29,7 @@ public class AreaComumService {
     }
 
     public AreaComum salvar(AreaComumDto areaComumDto) {
-        if (getByCodAreaComum(areaComumDto.getCodAreaComum()) != null) {
-            throw new ObjectNotFoundException(areaComumDto.getCodAreaComum());
-        }
-
-        AreaComum areaComum = new AreaComum();
-        areaComum.setId(null);
-        areaComum.setCodAreaComum(areaComumDto.getCodAreaComum());
-        areaComum.setDescricaoAreaComum(areaComumDto.getDescricaoAreaComum());
-        areaComum.setHorarioEmMinutosMinimoAntecedencia(areaComumDto.getHorarioEmMinutosMinimoAntecedencia());
-        areaComum.setQuantidadeReservaPermitidaPorSemana(areaComum.getQuantidadeReservaPermitidaPorSemana());
-        areaComum.setQuantidadeReservaPermitidaPorMes(areaComumDto.getQuantidadeReservaPermitidaPorMes());
+        AreaComum areaComum = areaComumDto.salvar(areaComumDto);
         return areaComumRepository.save(areaComum);
     }
 }
