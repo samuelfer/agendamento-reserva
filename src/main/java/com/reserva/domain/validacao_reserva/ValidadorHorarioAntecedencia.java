@@ -1,8 +1,8 @@
 package com.reserva.domain.validacao_reserva;
 
 import com.reserva.dto.DadosAgendamentoReservaDto;
-import com.reserva.exception.ValidacaoException;
-import com.reserva.model.Reserva;
+import com.reserva.exception.RegrasAgendamentoValidadorException;
+import com.reserva.model.AgendaReserva;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -12,13 +12,14 @@ import java.util.List;
 @Component
 public class ValidadorHorarioAntecedencia implements IValidadorAgendamentoReserva {
 
-    public void validar(DadosAgendamentoReservaDto dados, List<Reserva> reservasImovel) {
+    @Override
+    public void validar(DadosAgendamentoReservaDto dados, List<AgendaReserva> reservasImovel) {
         LocalDateTime dataReserva = dados.getDataHoraReserva();
         LocalDateTime agora = LocalDateTime.now();
         Long difencaEmMinutos = Duration.between(agora, dataReserva).toMinutes();
 
         if (difencaEmMinutos < 30) {
-            throw new ValidacaoException("A antecedência permitida para reservar essa área é de no mínimo 30 minutos");
+            throw new RegrasAgendamentoValidadorException("A antecedência permitida para reservar essa área é de no mínimo 30 minutos");
         }
 
     }
