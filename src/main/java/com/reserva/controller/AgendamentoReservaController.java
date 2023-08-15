@@ -1,7 +1,7 @@
 package com.reserva.controller;
 
 import com.reserva.dto.DadosAgendamentoReservaDto;
-import com.reserva.service.ReservaService;
+import com.reserva.service.AgendamentoReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +12,10 @@ import java.util.Arrays;
 
 @RequestMapping("reservas")
 @RestController
-public class ReservaController {
+public class AgendamentoReservaController {
 
     @Autowired
-    private ReservaService reservaService;
+    private AgendamentoReservaService reservaService;
 
     @GetMapping
     public ResponseEntity getReservas() {
@@ -40,6 +40,5 @@ public class ReservaController {
         } catch (Exception e) {
             return new ResponseEntity<>(Arrays.asList(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
-
     }
 }

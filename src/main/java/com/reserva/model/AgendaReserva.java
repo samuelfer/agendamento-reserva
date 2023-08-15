@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class Reserva {
+public class AgendaReserva {
 
     @Id
     @SequenceGenerator(name = "reserva_sequence", sequenceName = "reserva_sequence", initialValue = 1, allocationSize = 1)
