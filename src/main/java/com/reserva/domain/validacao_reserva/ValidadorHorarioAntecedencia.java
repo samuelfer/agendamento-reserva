@@ -1,6 +1,6 @@
 package com.reserva.domain.validacao_reserva;
 
-import com.reserva.dto.DadosAgendamentoReservaDto;
+import com.reserva.dto.AgendamentoReservaDto;
 import com.reserva.exception.RegrasAgendamentoValidadorException;
 import com.reserva.model.AgendaReserva;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.List;
 public class ValidadorHorarioAntecedencia implements IValidadorAgendamentoReserva {
 
     @Override
-    public void validar(DadosAgendamentoReservaDto dados, List<AgendaReserva> reservasImovel) {
+    public void validar(AgendamentoReservaDto dados, List<AgendaReserva> reservasImovel) {
         LocalDateTime dataReserva = dados.getDataHoraReserva();
         LocalDateTime agora = LocalDateTime.now();
         Long difencaEmMinutos = Duration.between(agora, dataReserva).toMinutes();

@@ -1,6 +1,6 @@
 package com.reserva.domain.validacao_reserva;
 
-import com.reserva.dto.DadosAgendamentoReservaDto;
+import com.reserva.dto.AgendamentoReservaDto;
 import com.reserva.exception.RegrasAgendamentoValidadorException;
 import com.reserva.model.AgendaReserva;
 import org.springframework.stereotype.Component;
@@ -12,12 +12,12 @@ import java.util.List;
 public class ValidadorHorarioAndDataFuncionamento implements IValidadorAgendamentoReserva  {
 
     @Override
-    public void validar(DadosAgendamentoReservaDto dados, List<AgendaReserva> reservasImovel) {
+    public void validar(AgendamentoReservaDto dados, List<AgendaReserva> reservasImovel) {
         validarHorariosFuncionamento(dados);
         validarDatasFuncionamento(dados);
     }
 
-    private void validarHorariosFuncionamento(DadosAgendamentoReservaDto dados) {
+    private void validarHorariosFuncionamento(AgendamentoReservaDto dados) {
         boolean horarioReservaIsAntesDoPermitido = dados.getDataHoraReserva().getHour() < 7;
         boolean horarioReservaIsDepoisDoPermitido = dados.getDataHoraReserva().getHour() > 23;
 
@@ -30,7 +30,7 @@ public class ValidadorHorarioAndDataFuncionamento implements IValidadorAgendamen
         }
     }
 
-    private void validarDatasFuncionamento(DadosAgendamentoReservaDto dados) {
+    private void validarDatasFuncionamento(AgendamentoReservaDto dados) {
         boolean dataReservaIsPermitida = dados.getDataHoraReserva().getDayOfWeek().equals(DayOfWeek.FRIDAY);
 
         if (dataReservaIsPermitida) {
