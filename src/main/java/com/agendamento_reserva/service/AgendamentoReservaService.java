@@ -53,9 +53,8 @@ public class AgendamentoReservaService {
     }
 
     private void existsAgendamentoParaAreaNaDataHoraSolicitada(AgendamentoReservaDto dados) {
-        Date dateAgendamento = DateUtil.localDateTimeToDate(dados.getDataHoraReserva());
         Long jaExistsAgendamento = reservaRepository
-               .existsByAreaComumAndAndDataHoraReserva(dados.getAreaComum(), dateAgendamento);
+               .existsAgendamentoParaAreaComumAndDataHoraReserva(dados.getAreaComum(), dados.getDataHoraReserva());
        if (jaExistsAgendamento > 0) {
            throw new RegrasAgendamentoValidadorException("Já existe um agendamento de reserva nesse horário e data para a área solicitada");
        }

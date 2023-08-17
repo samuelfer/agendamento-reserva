@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -15,6 +15,6 @@ public interface AgendamentoReservaRepository extends JpaRepository<AgendaReserv
     List<AgendaReserva> findByAreaComum(Long areaId);
 
     @Query(value = "select count(*) from reserva where area_comum = :areaComum and "+
-                    "date(data_hora_reserva) = :dataAgendamento", nativeQuery = true)
-    Long existsByAreaComumAndAndDataHoraReserva(Long areaComum, Date dataAgendamento);
+                    "data_hora_reserva = :dataAgendamento", nativeQuery = true)
+    Long existsAgendamentoParaAreaComumAndDataHoraReserva(Long areaComum, LocalDateTime dataAgendamento);
 }
